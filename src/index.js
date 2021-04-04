@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import React, { useCallback } from "react";
 
 const Component = props => {
@@ -27,12 +28,12 @@ const Component = props => {
     },
     measuredParent = useCallback(node => {
       if (node !== null) {
-        window.addEventListener("resize", () => {
-          prepEllipse(node);
-        });
+        window.addEventListener("resize", () => prepEllipse(node));
         prepEllipse(node);
+
+        return () => window.removeEventListener("resize", () => prepEllipse(node));
       }
-    });
+    }, [props.children]);
 
   return (
     <div
